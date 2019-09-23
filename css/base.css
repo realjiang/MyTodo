@@ -1,0 +1,14 @@
+*{
+  /*所有元素透明background，不透明度是0.1，看起来是浅灰的效果*/
+  background: rgba(0,0,0,.1);
+
+}
+body{
+  /*background : #000;*/
+}
+.container{
+  /*根据浏览器窗口缩放动态调整大小，如果直接用width，是写死的，不会根据浏览器动态变化*/
+  max-width: 700px;
+  /*内容左右居中*/
+  margin: 0 auto;
+}

@@ -3,9 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <title>My Todo App</title>
+  <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
-Hello world!
+<!--总容器开始-->
+<div class="container">
+  <!--list部分可以用ul具有一定的语义，但是要清除默认样式很麻烦，这里用div-->
+  <!--添加列表部分-->
+  <div class="add-task">
+    <input type="text">
+    <button>submit</button>
+  </div>
+  <!--列表显示部分-->
+  <div class="task-list">  <!--清单列表开始-->
+    <div class="task-item">   <!--任务开始-->
+      <span><input type="checkbox"></span>
+      <span class="task-content">item content 1</span>
+      <span>delete</span>
+      <!--详情-->
+      <span>detail</span>
+    </div>
+    <div class="task-item">
+      <span><input type="checkbox"></span>
+      <span class="task-content">item content 1</span>
+      <span>delete</span>
+      <!--详情-->
+      <span>detail</span>
+    </div>
+    <div class="task-item">
+      <span><input type="checkbox"></span>
+      <span class="task-content">item content 1</span>
+      <span>delete</span>
+      <!--详情-->
+      <span>detail</span>
+    </div>
+    <div class="task-item">
+      <span><input type="checkbox"></span>
+      <span class="task-content">item content 1</span>
+      <span>delete</span>
+      <!--详情-->
+      <span>detail</span>
+    </div>
+    <div class="task-item">
+      <span><input type="checkbox"></span>
+      <span class="task-content">item content 1</span>
+      <span>delete</span>
+      <!--详情-->
+      <span>detail</span>
+    </div>   <!--任务结束-->
+
+  </div>   <!--清单列表结束-->
+  <!--任务详情弹出框-->
+  <div class="tasl-detail"><!--任务详情开始-->
+    <div class="content"> <!--任务标题开始-->
+      <div> <!--任务描述开始-->
+        <div class="desc">
+
+        </div>
+      </div> <!--任务描述结束-->
+    </div> <!--任务详情结束-->
+    <!--定时提醒的时间选择模块-->
+    <div class="remind"> <!--任务定时提醒开始-->
+      <input type="date">
+      <!--提交，点击后有确认弹框-->
+      <button type="submit">submit</button>
+    </div> <!--任务定时提醒结束-->
+  </div> <!--任务详情结束-->
+</div> <!--总容器结束-->
+
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="js/base.js"></script>
 </body>
