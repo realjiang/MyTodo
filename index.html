@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <title>My Todo App</title>
+  <link rel="stylesheet" href="node_modules\normalize.css\normalize.css">
+  <!--<link href="https://cdn.bootcss.com/normalize/8.0.1/normalize.css" rel="stylesheet">-->
   <link rel="stylesheet" href="css/base.css">
 </head>
 <body>
 <!--总容器开始-->
 <div class="container">
+  <h1>MyTodo</h1>
   <!--list部分可以用ul具有一定的语义，但是要清除默认样式很麻烦，这里用div-->
   <!--添加列表部分-->
   <div class="add-task">
-    <input type="text">
-    <button>submit</button>
+    <input type="text" placeholder="e.g.下午去图书馆还书...">
+    <button type="submit">submit</button>
   </div>
   <!--列表显示部分-->
   <div class="task-list">  <!--清单列表开始-->
@@ -51,17 +54,22 @@
       <!--详情-->
       <span>detail</span>
     </div>   <!--任务结束-->
-
   </div>   <!--清单列表结束-->
+  <div class="task-detail-mask">
+    <!--包含任务详情，挡住后面内容，看起来像到了新的一页,
+    为了把detail弹出框显示在mask上，mask要提到上面来写，
+    或者调z-index调节层级-->
+  </div>
   <!--任务详情弹出框-->
-  <div class="tasl-detail"><!--任务详情开始-->
+  <div class="task-detail"><!--任务详情开始-->
     <div class="content"> <!--任务标题开始-->
+      下午去图书馆还书
+    </div>   <!--任务标题结束-->
       <div> <!--任务描述开始-->
         <div class="desc">
-
+          <textarea id=""></textarea>
         </div>
       </div> <!--任务描述结束-->
-    </div> <!--任务详情结束-->
     <!--定时提醒的时间选择模块-->
     <div class="remind"> <!--任务定时提醒开始-->
       <input type="date">
