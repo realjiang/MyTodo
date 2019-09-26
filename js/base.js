@@ -14,13 +14,25 @@
     task_list = [],
     current_index,
     $update_form,
-    $checkbox_complete
+    $checkbox_complete,
+    $msg = $('.msg'),
+    $msg_content = $msg.find('.msg-content'),
+    $msg_confirm = $msg.find('.confirmed'),
+    $alerter = $('.alerter')
     ;
 
   init();
 
   $form_add_task.on('submit',on_add_task_form_submit);
   $task_detail_mask.on('click',hide_task_detail);
+
+  function listen_msg_event() {
+    $msg_confirm.on('click',function () {
+      hide_msg();
+    })
+  }
+  
+
   function on_add_task_form_submit(e){
     var   new_task = {};
     //禁用默认行为
@@ -105,7 +117,8 @@
           '</div>'+
           '</div>'+
           '<div class="remind input-item"> '+
-          '<input class="datetime" name="remind_date" type="date" value="' + item.remind_date + '">'+
+          '<label>提醒时间</label>'+
+          '<input class="datetime" name="remind_date" type="text" value="' + (item.remind_date || '')+ '">'+
           '</div>'+
           '<div class="input-item"><button type="submit">更新</button></div>'+
         '</form>';
@@ -113,6 +126,8 @@
     $task_detail.html(null);
     //添加新模板，用新模板替换
     $task_detail.html(tpl);
+
+    $('.datetime').datetimepicker();
     /*选中其中的form元素, 因为之后会使用其监听submit事件*/
     $update_form = $task_detail.find('form');
     /*选中显示Task内容的元素*/
@@ -172,13 +187,43 @@
     //更新localStorage
     refresh_task_list();
   }
-  function init(){
-    // store.clear();
+
+  function init() {
     task_list = store.get('task_list') || [];
-    if(task_list.length){
+    listen_msg_event();
+    if (task_list.length)
       render_task_list();
-    }
+    task_remind_check();
   }
+
+  function task_remind_check() {
+    var current_timestamp;
+    var itl = setInterval(function () {
+      for (var i = 0; i < task_list.length; i++) {
+        var item = get(i), task_timestamp;
+        if (!item || !item.remind_date || item.informed)
+          continue;
+
+        current_timestamp = (new Date()).getTime();
+        task_timestamp = (new Date(item.remind_date)).getTime();
+        if (current_timestamp - task_timestamp >= 1) {
+          update_task(i, {informed: true});
+          show_msg(item.content);
+        }
+      }
+    }, 300);
+  }
+  function show_msg(msg) {
+    if (!msg) return;
+
+    $msg_content.html(msg);
+    $alerter.get(0).play();
+    $msg.show();
+  }
+  function hide_msg() {
+    $msg.hide();
+  }
+
   //渲染全部的task模板
   function render_task_list() {
     var $task_list = $('.task-list');

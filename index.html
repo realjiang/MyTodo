@@ -2,12 +2,17 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>My Todo App</title>
-  <link rel="stylesheet" href="node_modules\normalize.css\normalize.css">
-  <!--<link href="https://cdn.bootcss.com/normalize/8.0.1/normalize.css" rel="stylesheet">-->
+  <title>My Todo List</title>
+  <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
+  <link rel="stylesheet" href="node_modules/jquery-datetimepicker/build/jquery.datetimepicker.min.css">
   <link rel="stylesheet" href="css/base.css">
 </head>
+</head>
 <body>
+<div class="msg">
+  <span class="msg-content"></span>
+  <span class="anchor confirmed">知道了</span>
+</div>
 <!--总容器开始-->
 <div class="container">
   <h1>MyTodo</h1>
@@ -24,42 +29,9 @@
   </form>
   <!--列表显示部分-->
   <div class="task-list">  <!--清单列表开始-->
-    <!--<div class="task-item">   &lt;!&ndash;任务开始&ndash;&gt;-->
-      <!--<span><input type="checkbox"></span>-->
-      <!--<span class="task-content">item content 1</span>-->
-      <!--<span>delete</span>-->
-      <!--&lt;!&ndash;详情&ndash;&gt;-->
-      <!--<span>detail</span>-->
-    <!--</div>-->
-    <!--<div class="task-item">-->
-      <!--<span><input type="checkbox"></span>-->
-      <!--<span class="task-content">item content 1</span>-->
-      <!--<span>delete</span>-->
-      <!--&lt;!&ndash;详情&ndash;&gt;-->
-      <!--<span>detail</span>-->
-    <!--</div>-->
-    <!--<div class="task-item">-->
-      <!--<span><input type="checkbox"></span>-->
-      <!--<span class="task-content">item content 1</span>-->
-      <!--<span>delete</span>-->
-      <!--&lt;!&ndash;详情&ndash;&gt;-->
-      <!--<span>detail</span>-->
-    <!--</div>-->
-    <!--<div class="task-item">-->
-      <!--<span><input type="checkbox"></span>-->
-      <!--<span class="task-content">item content 1</span>-->
-      <!--<span>delete</span>-->
-      <!--&lt;!&ndash;详情&ndash;&gt;-->
-      <!--<span>detail</span>-->
-    <!--</div>-->
-    <!--<div class="task-item">-->
-      <!--<span><input type="checkbox"></span>-->
-      <!--<span class="task-content">item content 1</span>-->
-      <!--<span>delete</span>-->
-      <!--&lt;!&ndash;详情&ndash;&gt;-->
-      <!--<span>detail</span>-->
-    <!--</div>   &lt;!&ndash;任务结束&ndash;&gt;-->
+
   </div>   <!--清单列表结束-->
+
   <div class="task-detail-mask">
     <!--包含任务详情，挡住后面内容，看起来像到了新的一页,
     为了把detail弹出框显示在mask上，mask要提到上面来写，
@@ -85,10 +57,9 @@
     </div>
   </div> <!--任务详情结束-->
 </div> <!--总容器结束-->
-
+<video class="alerter" src="alert.mp3"></video>
 <script src="node_modules/jquery/dist/jquery.js"></script>
-<!--<script src="node_modules/store/dist/store.everything.js"></script>-->
+<script src="node_modules/jquery-datetimepicker/build/jquery.datetimepicker.full.js"></script>
 <script src="node_modules/store/store.js"></script>
 <script src="js/base.js"></script>
-</body>
 </html>
