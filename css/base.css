@@ -193,6 +193,7 @@ button{
   color: #333;
   width: 50%;
   height: 100%;
+  overflow: auto;
   padding: 10px;
   bottom: 0;
   right: 0;

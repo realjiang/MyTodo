@@ -5,6 +5,8 @@
   'use strict';
 
   var $form_add_task = $('.add-task'),
+    $window = $(window),
+    $body = $('body'),
     $task_delete_trigger,
     $task_detail_trigger,
     $task_detail = $('.task-detail'),
@@ -22,9 +24,65 @@
     ;
 
   init();
+  pop('avc');
 
   $form_add_task.on('submit',on_add_task_form_submit);
   $task_detail_mask.on('click',hide_task_detail);
+
+  //自定义alert
+  function pop(arg) {
+    if(!arg){
+        console.error('pop title is required');
+    }
+    var conf ={},$box,$mask;
+    $box = $('<div></div>')
+      .css({
+        position: 'fixed',
+        width:300,
+        height:200,
+        background:'#fff',
+        'border-radius': 3,
+        'box-shadow':'0 1px 2px rgba(0,0,0,.5)'
+      })
+
+    $mask = $('<div></div>')
+      .css({
+        position: 'fixed',
+        background:'rgba(0,0,0,.5)',
+        top:0,
+        bottom:0,
+        left:0,
+        right:0
+      })
+    function adjust_box_position() {
+     var window_width = $window.width(),
+          window_height = $window.height(),
+          box_width = $box.width(),
+          box_height = $box.height(),
+          move_x,
+          move_y
+          ;
+      move_x = (window_width - box_width)/2;
+      move_y = ((window_height - box_height)/2)-20;
+      
+      $box.css({
+        left:move_x,
+        top:move_y
+      })
+    }
+    $window.on('resize',function () {
+      adjust_box_position();
+    })
+    if(typeof arg == 'string'){
+      conf.title = arg;
+    }else {
+      conf = $.extend(conf,arg);
+    }
+
+      $mask.appendTo($body);
+      $box.appendTo($body);
+      $window.resize();
+  }
 
   function listen_msg_event() {
     $msg_confirm.on('click',function () {
