@@ -139,6 +139,7 @@ button{
   width: 84%;
   margin-right: 1%;
 }
+button.primary,
 [type=submit]{
   background: #46b1e4;
 }

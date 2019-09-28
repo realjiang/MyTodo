@@ -24,7 +24,12 @@
     ;
 
   init();
-  pop('avc');
+  // pop('确定要删除吗？')
+  //   .then(function (r) {
+  //     if(r){
+  //       delete();
+  //     }
+  //   })
 
   $form_add_task.on('submit',on_add_task_form_submit);
   $task_detail_mask.on('click',hide_task_detail);
@@ -34,16 +39,60 @@
     if(!arg){
         console.error('pop title is required');
     }
-    var conf ={},$box,$mask;
-    $box = $('<div></div>')
+    var conf ={},
+        $box,
+        $mask,
+        $title,
+        $content,
+        $confirm,
+        $cancel,
+        dfd,
+        timer,
+        confirmed
+        ;
+
+    dfd = $.Deferred();
+
+    if(typeof arg == 'string'){
+      conf.title = arg;
+    }else {
+      conf = $.extend(conf,arg);
+    }
+
+    $box = $('<div>' +
+      '<div class="pop-title">'+ conf.title +'</div>'+
+      '<div class="pop-content">' +
+      '<div>' +
+      '<button style="margin-right: 5px" class="primary confirm">确定</button>' +
+      '<button class="cancel">取消</button>' +
+      '</div>'+
+      '</div>'+
+      '</div>')
       .css({
+        color:'#444',
         position: 'fixed',
         width:300,
-        height:200,
+        height:'auto',
+        padding:'15px 10px',
         background:'#fff',
         'border-radius': 3,
         'box-shadow':'0 1px 2px rgba(0,0,0,.5)'
       })
+
+    $title = $box.find('.pop-title').css({
+      padding : '5px 10px',
+      'font-weight':900,
+      'font-size':20,
+      'text-align':'center'
+
+    })
+    $content = $box.find('.pop-content').css({
+      padding : '5px 10px',
+      'text-align':'center'
+    })
+
+    $confirm = $content.find('button.confirm');
+    $cancel = $content.find('button.cancel');
 
     $mask = $('<div></div>')
       .css({
@@ -54,6 +103,32 @@
         left:0,
         right:0
       })
+
+    timer = setInterval(function () {
+      if(confirmed !== undefined){
+        dfd.resolve(confirmed);
+        clearInterval(timer);
+        dismiss_pop();
+      }
+    },50)
+
+    $confirm.on('click',on_confirmed)
+    $cancel.on('click',on_cancel);
+    $mask.on('click',on_cancel);
+
+    function on_confirmed() {
+      confirmed = true;
+    }
+
+    function on_cancel() {
+      confirmed = false;
+    }
+
+    function dismiss_pop() {
+      $mask.remove();
+      $box.remove();
+    }
+
     function adjust_box_position() {
      var window_width = $window.width(),
           window_height = $window.height(),
@@ -73,15 +148,11 @@
     $window.on('resize',function () {
       adjust_box_position();
     })
-    if(typeof arg == 'string'){
-      conf.title = arg;
-    }else {
-      conf = $.extend(conf,arg);
-    }
 
       $mask.appendTo($body);
       $box.appendTo($body);
       $window.resize();
+      return dfd.promise();
   }
 
   function listen_msg_event() {
@@ -216,10 +287,13 @@
       var $this = $(this);
       //找到删除按钮所在的task元素
       var $item = $this.parent().parent();
-      //确认删除
-      var tmp = confirm('确定删除？');
       var index = $item.data('index');
-      tmp ? task_delete(index) : null;
+      //确认删除
+      pop('确定删除？')
+        .then(function (r) {
+          r ? task_delete(index) : null;
+        })
+
     })
   }
 
